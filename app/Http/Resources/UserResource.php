@@ -22,7 +22,8 @@ class UserResource extends JsonResource
             'location'=>$this->location,
             'address'=>$this->address,
             'created_at'=>$this->created_at,
-            'updated_at'=>$this->updated_at
+            'updated_at'=>$this->updated_at,
+            'profile_image' => $this->getFirstMediaUrl('profile_image') ?  $this->getFirstMediaUrl('profile_image') : null,
             
             
         ];

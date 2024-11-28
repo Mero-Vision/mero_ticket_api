@@ -51,6 +51,10 @@ class AuthController extends Controller
                     'location' => $request->location,
                     'address' => $request->address
                 ]);
+
+                if ($request->profile_image) {
+                    $user->addMedia($request->profile_image)->toMediaCollection('profile_image');
+                }
                 return $user;
             });
             if ($user) {
