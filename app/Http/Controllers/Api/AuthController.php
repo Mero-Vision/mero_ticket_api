@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    public function singup(UserCreateRequest $request){
+    public function signup(UserCreateRequest $request){
         try{
             
             $user=DB::transaction(function()use($request){
