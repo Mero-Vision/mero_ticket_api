@@ -9,4 +9,6 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Event extends Model implements HasMedia
 {
     use InteractsWithMedia;
+
+    protected $guarded= ['id'];
 }
