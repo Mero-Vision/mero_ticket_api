@@ -19,5 +19,6 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('my-events', [EventController::class, 'index']);
     Route::get('event', [EventController::class, 'homePageEvent']);
+    Route::get('event/{id}', [EventController::class, 'show']);
     Route::post('event', [EventController::class, 'store']);
 });
