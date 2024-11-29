@@ -23,6 +23,7 @@ class AgentResource extends JsonResource
             'address' => $this->address,
             'organization_name' => $this->organization_name,
             'organization_category' => $this->organization_category,
+            'role'=>$this->getRoleNames(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'organization_logo' => $this->getFirstMediaUrl('organization_logo') ?  $this->getFirstMediaUrl('organization_logo') : null,

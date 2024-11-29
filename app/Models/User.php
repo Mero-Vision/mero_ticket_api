@@ -9,12 +9,17 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens,HasFactory, Notifiable;
     use InteractsWithMedia;
+    use HasRoles;
+
+    const USER = 'user';
+    const VENDOR = 'vendor';
 
     /**
      * The attributes that are mass assignable.

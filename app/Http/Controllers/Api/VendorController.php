@@ -37,6 +37,8 @@ class VendorController extends Controller
                     'organization_category' => $request->organization_category
                 ]);
 
+                $agent->assignRole(User::VENDOR);
+
                 if ($request->organization_logo) {
                     $agent->addMedia($request->organization_logo)->toMediaCollection('organization_logo');
                 }

@@ -52,6 +52,8 @@ class AuthController extends Controller
                     'address' => $request->address
                 ]);
 
+                $user->assignRole(User::USER);
+
                 if ($request->profile_image) {
                     $user->addMedia($request->profile_image)->toMediaCollection('profile_image');
                 }
