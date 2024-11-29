@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Event\EventCreateRequest;
+use App\Http\Resources\EventResource;
+use App\Models\Event;
+use App\Models\EventVendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -18,9 +24,49 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EventCreateRequest $request)
     {
-        //
+        try {
+
+            $event = DB::transaction(function () use ($request) {
+                $event = Event::create([
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'start_date' => $request->start_date,
+                    'end_date' => $request->end_date,
+                    'start_time' => $request->start_time,
+                    'end_time' => $request->end_time,
+                    'address' => $request->address
+                ]);
+
+                if ($request->event_image) {
+                    $event->addMedia($request->event_image)->toMediaCollection('event_image');
+                }
+
+                if ($request->has('event_vender_id') && is_array($request->event_vender_id)) {
+                    $eventVendors = collect($request->event_vender_id)->map(function ($event_vender_id) use ($event) {
+                        return [
+                            'user_id' => Auth::id(),
+                            'event_id' => $event->id,
+                            'vendor_user_id' => $event_vender_id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    });
+
+                    EventVendor::insert($eventVendors->toArray());
+                }
+
+                return $event;
+            });
+
+            if ($event) {
+                return responseSuccess(new EventResource($event), 200, 'Event Created Successfully!');
+            }
+        } catch (\Exception $e) {
+            return responseError($e->getMessage(), 500);
+        }
     }
 
     /**

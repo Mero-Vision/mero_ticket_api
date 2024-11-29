@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,4 +15,5 @@ Route::post('vendor-signup', [VendorController::class, 'store']);
 
 Route::middleware(['auth:api'])->group(function () {
     
+    Route::post('event', [EventController::class, 'store']);
 });
