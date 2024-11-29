@@ -18,7 +18,17 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $pagination_limit = request()->query('pagination_limit');
+        $search_keyword = request()->query('search_keyword');
+
+        $vendors = Event::where('user_id',Auth::user()->id)->when($search_keyword, function ($query) use ($search_keyword) {
+            $query->where('title', 'like', '%' . $search_keyword . '%');
+        })
+            ->latest();
+
+        $pagination = $pagination_limit ? $vendors->paginate($pagination_limit) : $vendors->get();
+
+        return EventResource::collection($pagination);
     }
 
     /**
