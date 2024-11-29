@@ -7,6 +7,7 @@ use App\Http\Requests\Event\EventCreateRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use App\Models\EventVendor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,12 +17,31 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function homePageEvent()
+    {
+        $pagination_limit = request()->query('pagination_limit');
+        $search_keyword = request()->query('search_keyword');
+
+        $vendors = Event::with('eventVendors.event')->where('user_id', Auth::user()->id)
+            ->where('end_date', '>=', Carbon::now())
+            ->when($search_keyword, function ($query) use ($search_keyword) {
+                $query->where('title', 'like', '%' . $search_keyword . '%');
+            })
+            ->latest();
+
+        $pagination = $pagination_limit ? $vendors->paginate($pagination_limit) : $vendors->get();
+
+        return EventResource::collection($pagination);
+    }
+
+
     public function index()
     {
         $pagination_limit = request()->query('pagination_limit');
         $search_keyword = request()->query('search_keyword');
 
-        $vendors = Event::with('eventVendors.event')->where('user_id',Auth::user()->id)->when($search_keyword, function ($query) use ($search_keyword) {
+        $vendors = Event::with('eventVendors.event')->where('user_id', Auth::user()->id)->when($search_keyword, function ($query) use ($search_keyword) {
             $query->where('title', 'like', '%' . $search_keyword . '%');
         })
             ->latest();

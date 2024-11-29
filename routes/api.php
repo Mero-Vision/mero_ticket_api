@@ -18,5 +18,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('vendors', [VendorController::class, 'index']);
 
     Route::get('my-events', [EventController::class, 'index']);
+    Route::get('event', [EventController::class, 'homePageEvent']);
     Route::post('event', [EventController::class, 'store']);
 });
