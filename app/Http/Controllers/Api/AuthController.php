@@ -50,7 +50,7 @@ class AuthController extends Controller
                     'password' => $request->password,
                     'location' => $request->location,
                     'address' => $request->address
-                ]);
+                ]); 
 
                 $user->assignRole(User::USER);
 
