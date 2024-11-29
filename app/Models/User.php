@@ -21,11 +21,13 @@ class User extends Authenticatable implements HasMedia
     const USER = 'user';
     const VENDOR = 'vendor';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+
+    protected function getDefaultGuardName(): string
+    {
+        return 'api';
+    }
+
+   
     protected $guarded
     = [
         'id'
