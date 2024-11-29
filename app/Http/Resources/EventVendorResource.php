@@ -17,7 +17,7 @@ class EventVendorResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'venders'=>User::collection($this->whenLoaded('vendorUser'))
+            'venders'=>UserResource::collection($this->whenLoaded('vendorUser'))
         ];
     }
 }
