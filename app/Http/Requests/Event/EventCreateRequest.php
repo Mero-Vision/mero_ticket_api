@@ -11,7 +11,7 @@ class EventCreateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class EventCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'=>['required'],
+            'description'=>['required'],
+            'start_date'=>['required'],
+            'end_date'=>['required'],
+            'start_time'=>['required'],
+            'end_time'=>['required'],
+            'address'=>['required'],
+            'event_image'=>['required','image']
         ];
     }
 }
