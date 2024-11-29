@@ -53,9 +53,8 @@ class EventController extends Controller
                             'created_at' => now(),
                             'updated_at' => now(),
                         ];
-                    });
-
-                    EventVendor::insert($eventVendors->toArray());
+                    })->toArray();
+                    EventVendor::insert($eventVendors);
                 }
 
                 return $event;
