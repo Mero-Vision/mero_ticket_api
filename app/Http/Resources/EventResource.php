@@ -14,6 +14,18 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id'=>$this->id,
+            'user_id'=>$this->user_id,
+            'title'=>$this->title,
+            'description'=>$this->description,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'start_time'=>$this->start_time,
+            'end_time'=>$this->end_time,
+            'address'=>$this->address,
+            'event_image' => $this->getFirstMediaUrl('event_image') ?  $this->getFirstMediaUrl('event_image') : null,
+            'vendors'=>EventVendorResource::collection($this->whenLoaded('eventVendors'))
+        ];
     }
 }
