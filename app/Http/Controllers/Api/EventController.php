@@ -116,6 +116,7 @@ class EventController extends Controller
             });
 
             if ($event) {
+                $event->load('eventVendors','eventTickets');
                 return responseSuccess(new EventResource($event), 200, 'Event Created Successfully!');
             }
         } catch (\Exception $e) {

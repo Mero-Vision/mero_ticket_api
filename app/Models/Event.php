@@ -15,4 +15,8 @@ class Event extends Model implements HasMedia
     public function eventVendors(){
         return $this->hasMany(EventVendor::class,'event_id');
     }
+
+    public function eventTickets(){
+        return $this->hasMany(EventTicket::class,'event_id');
+    }
 }

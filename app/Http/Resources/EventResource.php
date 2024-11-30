@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\EventTicket;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,7 +27,8 @@ class EventResource extends JsonResource
             'address'=>$this->address,
             'event_category'=>$this->event_category,
             'event_image' => $this->getFirstMediaUrl('event_image') ?  $this->getFirstMediaUrl('event_image') : null,
-            'vendors'=>EventVendorResource::collection($this->whenLoaded('eventVendors'))
+            'vendors'=>EventVendorResource::collection($this->whenLoaded('eventVendors')),
+            'event_tickets'=>EventTicket::collection($this->whenLoaded('eventTickets'))
         ];
     }
 }
