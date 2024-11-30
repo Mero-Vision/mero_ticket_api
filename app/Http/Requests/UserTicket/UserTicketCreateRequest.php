@@ -22,7 +22,9 @@ class UserTicketCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'ticket_id'=>['required'],
+            'event_id'=>['required'],
+            'price'=>['required','numeric']
         ];
     }
 }
