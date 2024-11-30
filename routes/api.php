@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\UserTicketController;
 use App\Http\Controllers\Api\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('event', [EventController::class, 'homePageEvent']);
     Route::get('event/{id}', [EventController::class, 'show']);
     Route::post('event', [EventController::class, 'store']);
+
+    Route::post('user-ticket', [UserTicketController::class, 'store']);
 });
