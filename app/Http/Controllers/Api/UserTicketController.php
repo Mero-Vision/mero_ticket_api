@@ -46,7 +46,7 @@ class UserTicketController extends Controller
             });
 
             if ($userTicket) {
-                $userTicket->load('event','event_ticket');
+                $userTicket->load('event','eventTicket');
                 return responseSuccess(new UserTicketResource($userTicket), 200, 'Ticket Purchased Successfully!');
             }
         } catch (\Exception $e) {
