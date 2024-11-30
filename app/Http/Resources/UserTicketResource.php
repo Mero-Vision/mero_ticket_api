@@ -14,6 +14,11 @@ class UserTicketResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id'=>$this->id,
+            'event'=>new EventResource($this->whenLoaded('event')),
+            'event_ticket'=>new EventTicketResource($this->whenLoaded('eventTicket'))
+            
+        ];
     }
 }

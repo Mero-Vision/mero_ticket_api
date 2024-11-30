@@ -17,7 +17,14 @@ class UserTicketController extends Controller
      */
     public function index()
     {
-        //
+        $pagination_limit = request()->query('pagination_limit');
+        
+        $vendors = UserTicket::with('event')->where('user_id', Auth::user()->id)
+            ->latest();
+
+        $pagination = $pagination_limit ? $vendors->paginate($pagination_limit) : $vendors->get();
+
+        return UserTicketResource::collection($pagination);
     }
 
     /**

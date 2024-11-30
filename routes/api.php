@@ -23,5 +23,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('event/{id}', [EventController::class, 'show']);
     Route::post('event', [EventController::class, 'store']);
 
+    Route::get('my-ticket', [UserTicketController::class, 'index']);
     Route::post('user-ticket', [UserTicketController::class, 'store']);
 });
