@@ -130,7 +130,7 @@ class EventController extends Controller
     public function show(string $id)
     {
 
-        $event = Event::with('eventVendors.event')->find($id);
+        $event = Event::with('eventVendors.event','eventTickets')->find($id);
         if (!$event) {
             return responseError('Event Not Found', 500);
         }
