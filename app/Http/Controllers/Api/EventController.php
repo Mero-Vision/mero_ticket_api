@@ -24,7 +24,7 @@ class EventController extends Controller
         $pagination_limit = request()->query('pagination_limit');
         $search_keyword = request()->query('search_keyword');
 
-        $vendors = Event::with('eventVendors.event')->where('user_id', Auth::user()->id)
+        $vendors = Event::with('eventVendors.event','event_tickets')->where('user_id', Auth::user()->id)
             ->where('end_date', '>=', Carbon::now())
             ->when($search_keyword, function ($query) use ($search_keyword) {
                 $query->where('title', 'like', '%' . $search_keyword . '%');
