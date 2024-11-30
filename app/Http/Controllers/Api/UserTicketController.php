@@ -19,7 +19,7 @@ class UserTicketController extends Controller
     {
         $pagination_limit = request()->query('pagination_limit');
         
-        $vendors = UserTicket::with('event')->where('user_id', Auth::user()->id)
+        $vendors = UserTicket::with('event','event_ticket')->where('user_id', Auth::user()->id)
             ->latest();
 
         $pagination = $pagination_limit ? $vendors->paginate($pagination_limit) : $vendors->get();
@@ -46,6 +46,7 @@ class UserTicketController extends Controller
             });
 
             if ($userTicket) {
+                $userTicket->load('event','event_ticket');
                 return responseSuccess(new UserTicketResource($userTicket), 200, 'Ticket Purchased Successfully!');
             }
         } catch (\Exception $e) {
