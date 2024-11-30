@@ -24,6 +24,7 @@ class EventResource extends JsonResource
             'start_time'=>$this->start_time,
             'end_time'=>$this->end_time,
             'address'=>$this->address,
+            'event_category'=>$this->event_category,
             'event_image' => $this->getFirstMediaUrl('event_image') ?  $this->getFirstMediaUrl('event_image') : null,
             'vendors'=>EventVendorResource::collection($this->whenLoaded('eventVendors'))
         ];

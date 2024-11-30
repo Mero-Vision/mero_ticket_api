@@ -67,7 +67,8 @@ class EventController extends Controller
                     'end_date' => $request->end_date,
                     'start_time' => $request->start_time,
                     'end_time' => $request->end_time,
-                    'address' => $request->address
+                    'address' => $request->address,
+                    'event_category' => $request->event_category
                 ]);
 
                 if ($request->event_image) {

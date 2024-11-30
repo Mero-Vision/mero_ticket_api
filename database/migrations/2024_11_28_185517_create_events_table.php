@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('start_time')->nullable();
             $table->string('end_time')->nullable();
             $table->string('address')->nullable();
+            $table->string('event_category')->nullable();
             $table->timestamps();
         });
     }
