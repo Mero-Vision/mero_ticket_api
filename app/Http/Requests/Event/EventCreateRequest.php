@@ -29,7 +29,7 @@ class EventCreateRequest extends FormRequest
             'start_time'=>['required'],
             'end_time'=>['required'],
             'address'=>['required'],
-            'event_image'=>['required','image']
+            'event_image'=>['nullable','image']
         ];
     }
 }
