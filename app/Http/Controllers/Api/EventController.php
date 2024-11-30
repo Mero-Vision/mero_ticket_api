@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\EventCreateRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
+use App\Models\EventTicket;
 use App\Models\EventVendor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -88,6 +89,29 @@ class EventController extends Controller
                     EventVendor::insert($eventVendors);
                 }
 
+                if ($request->has('event_tickets') && is_array($request->event_tickets)) {
+                    $eventTickets = collect($request->event_tickets)->map(function ($eventTicket) use ($event) {
+                        return [
+                            'event_id' => $event->id,
+                            'ticket_type' => $eventTicket['ticket_type'] ?? null,
+                            'ticket_price' => $eventTicket['ticket_price'] ?? 0,
+                            'qr_code' => $eventTicket['qr_code'] ?? null,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    })->filter(function ($ticket) {
+                        return !is_null($ticket['ticket_type']) && !is_null($ticket['ticket_price']);
+                    })->toArray();
+                    if (!empty($eventTickets)) {
+                        try {
+                            EventTicket::insert($eventTickets);
+                        } catch (\Exception $e) {
+                            return responseError('Failed to insert event tickets', 500);
+                        }
+                    }
+                }
+
+
                 return $event;
             });
 
@@ -104,10 +128,10 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-       
+
         $event = Event::with('eventVendors.event')->find($id);
-        if(!$event){
-            return responseError('Event Not Found',500);
+        if (!$event) {
+            return responseError('Event Not Found', 500);
         }
         return new EventResource($event);
     }
