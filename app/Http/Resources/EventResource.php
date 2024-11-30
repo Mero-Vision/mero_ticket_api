@@ -28,7 +28,7 @@ class EventResource extends JsonResource
             'event_category'=>$this->event_category,
             'event_image' => $this->getFirstMediaUrl('event_image') ?  $this->getFirstMediaUrl('event_image') : null,
             'vendors'=>EventVendorResource::collection($this->whenLoaded('eventVendors')),
-            'event_tickets'=>EventTicket::collection($this->whenLoaded('eventTickets'))
+            'event_tickets'=>EventTicketResource::collection($this->whenLoaded('eventTickets'))
         ];
     }
 }
