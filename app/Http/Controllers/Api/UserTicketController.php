@@ -59,7 +59,11 @@ class UserTicketController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $userTicket=UserTicket::find($id);
+        if(!$userTicket){
+            return responseError('Ticket Invalid',500);
+        }
+        return responseSuccess($userTicket,200,'Ticket Valid');
     }
 
     /**
